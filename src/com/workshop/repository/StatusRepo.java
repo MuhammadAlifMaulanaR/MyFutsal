@@ -12,9 +12,8 @@ public class StatusRepo {
         this.connection = connection;
     }
     public void create(Status status) {
-        try {
             String sql = "INSERT INTO Status (ID, description) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setInt(1, status.getID());
             preparedStatement.setString(2, status.getDescription());
             preparedStatement.executeUpdate();
@@ -25,10 +24,9 @@ public class StatusRepo {
 
     public  List<Status> select(){
         List<Status> statuses = new ArrayList<>();
-        try{
             String sql = "SELECT*FROM Status";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()){
                 statuses.add(new Status(resultSet.getInt("ID"), resultSet.getString("description")));
             }
@@ -39,9 +37,8 @@ public class StatusRepo {
     }
 
     public boolean update(Status status){
-        try {
             String sql = "UPDATE Status SET description = ? WHERE ID = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, status.getDescription());
             preparedStatement.setInt(2, status.getID());
             int row = preparedStatement.executeUpdate();
@@ -57,7 +54,6 @@ public class StatusRepo {
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setInt(1, ID);
             int row = statement.executeUpdate();
-//            statement.executeUpdate();
             return row > 0;
         } catch (SQLException e){
             e.printStackTrace();

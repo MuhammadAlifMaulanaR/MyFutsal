@@ -11,14 +11,24 @@ public class Connect {
     public static Connection conn() throws SQLException{
         Connection connection = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3360/futsal1", "root", "");
+//            com.workshop.MainApp mainApp = new com.workshop.MainApp(connection);
             MainApp mainApp = new MainApp(connection);
+            mainApp.showMenu();
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            if (connection != null){
+                try{
+                    connection.close();
+                    System.out.println("Connection closed");
+                } catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
         }
-        return  connection
-                ;
+        return connection;
     }
 }
 
