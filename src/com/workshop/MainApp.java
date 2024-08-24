@@ -5,6 +5,7 @@ import com.workshop.repository.LapanganRepo;
 import com.workshop.repository.StatusRepo;
 import com.workshop.repository.UserRepo;
 import com.workshop.service.JenisLapanganService;
+import com.workshop.service.LapanganService;
 import com.workshop.service.StatusService;
 import com.workshop.service.UserService;
 import com.workshop.view.*;
@@ -51,7 +52,10 @@ public class MainApp {
                         jenisLapanganView.ViewJenisLapangans(scanner);
                         break;
                     case 4:
-                        LapanganView lapanganView = new LapanganView(new LapanganRepo(connection), new JenisLapanganRepo(connection));
+                        LapanganRepo lapanganRepo = new LapanganRepo(connection);
+                        JenisLapanganRepo jenisLapanganRepo1 =  new JenisLapanganRepo(connection);
+                        LapanganService lapanganService = new LapanganService(lapanganRepo, jenisLapanganRepo1);
+                        LapanganView lapanganView = new LapanganView(lapanganService);
                         lapanganView.ViewLapangans(scanner);
                         break;
                     case 5:
