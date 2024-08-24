@@ -41,17 +41,16 @@ public class LapanganService {
                 .orElse(null);
     }
 
-    public void updateLapangan(int lapanganID, String newName, int newJenisLapanganID) {
-        Lapangan lapangan = getLapanganById(lapanganID);
-
+    public void updateLapangan(int ID, String name, int jenisLapanganID) {
+        Lapangan lapangan = getLapanganById(ID);
         if (lapangan != null) {
             JenisLapangan newJenisLapangan = jenisLapanganRepo.select().stream()
-                    .filter(j -> j.getID() == newJenisLapanganID)
+                    .filter(j -> j.getID() == jenisLapanganID)
                     .findFirst()
                     .orElse(null);
 
             if (newJenisLapangan != null) {
-                lapangan.setName(newName);
+                lapangan.setName(name);
                 lapangan.setJenisLapangan(newJenisLapangan);
                 lapanganRepo.update(lapangan);
                 System.out.println("Lapangan updated successfully.");
@@ -63,10 +62,10 @@ public class LapanganService {
         }
     }
 
-    public void deleteLapangan(int lapanganID) {
-        Lapangan lapangan = getLapanganById(lapanganID);
+    public void deleteLapangan(int ID) {
+        Lapangan lapangan = getLapanganById(ID);
         if (lapangan != null) {
-            lapanganRepo.delete(lapanganID);
+            lapanganRepo.delete(ID);
             System.out.println("Lapangan deleted successfully.");
         } else {
             System.out.println("Lapangan not found.");
