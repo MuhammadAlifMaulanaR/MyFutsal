@@ -34,9 +34,9 @@ public class LapanganService {
         return lapanganRepo.select();
     }
 
-    public Lapangan getLapanganById(int id) {
+    public Lapangan getLapanganById(int ID) {
         return lapanganRepo.select().stream()
-                .filter(lapangan -> lapangan.getID() == id)
+                .filter(lapangan -> lapangan.getID() == ID)
                 .findFirst()
                 .orElse(null);
     }
